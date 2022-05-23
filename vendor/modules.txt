@@ -1,9 +1,26 @@
+# github.com/gizak/termui/v3 v3.1.0
+## explicit
+github.com/gizak/termui/v3
+github.com/gizak/termui/v3/drawille
+github.com/gizak/termui/v3/widgets
 # github.com/golang/protobuf v1.4.2
 ## explicit; go 1.9
 github.com/golang/protobuf/proto
+# github.com/mattn/go-runewidth v0.0.2
+## explicit
+github.com/mattn/go-runewidth
+# github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7
+## explicit
+github.com/mitchellh/go-wordwrap
+# github.com/montanaflynn/stats v0.6.6
+## explicit; go 1.13
+github.com/montanaflynn/stats
 # github.com/namnm1991/onesignal-go-api v1.0.2
 ## explicit; go 1.13
 github.com/namnm1991/onesignal-go-api
+# github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d
+## explicit
+github.com/nsf/termbox-go
 # golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
 ## explicit; go 1.17
 golang.org/x/net/context
