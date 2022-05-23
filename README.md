@@ -1,2 +1,7 @@
-# hackamoon07
-team S.O.S - hackamoon 2022
+# Smart Alerts - S.O.S - Hackamoon 2022
+
+Krystal Smart Alerts notifies sharp changes in important token metrics to retail users
+
+---
+
+Alert users
