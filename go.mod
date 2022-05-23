@@ -2,7 +2,7 @@ module github.com/namnm1991/hackamoon07
 
 go 1.17
 
-require github.com/OneSignal/onesignal-go-client v1.0.0
+require github.com/namnm1991/onesignal-go-api v1.0.2
 
 require (
 	github.com/golang/protobuf v1.4.2 // indirect

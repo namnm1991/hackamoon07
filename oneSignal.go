@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	onesignal "github.com/OneSignal/onesignal-go-client"
+	onesignal "github.com/namnm1991/onesignal-go-api"
 )
 
 const (

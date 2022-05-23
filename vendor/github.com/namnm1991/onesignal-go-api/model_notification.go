@@ -4329,7 +4329,7 @@ func (o *Notification) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "thread_id")
 		delete(additionalProperties, "summary_arg")
 		delete(additionalProperties, "summary_arg_count")
-		delete(additionalProperties, "email_subect")
+		delete(additionalProperties, "email_subject")
 		delete(additionalProperties, "email_body")
 		delete(additionalProperties, "email_from_name")
 		delete(additionalProperties, "email_from_address")

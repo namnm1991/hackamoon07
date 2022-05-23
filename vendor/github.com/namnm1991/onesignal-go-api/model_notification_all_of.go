@@ -175,7 +175,7 @@ type NotificationAllOf struct {
 	// Channel: Push Notifications Platform: iOS 12+ When using thread_id, you can also control the count of the number of notifications in the group. For example, if the group already has 12 notifications, and you send a new notification with summary_arg_count = 2, the new total will be 14 and the summary will be \"14 more notifications from summary_arg\" 
 	SummaryArgCount *int32 `json:"summary_arg_count,omitempty"`
 	// Channel: Email Required.  The subject of the email. 
-	EmailSubect *string `json:"email_subect,omitempty"`
+	EmailSubect *string `json:"email_subject,omitempty"`
 	// Channel: Email Required unless template_id is set. HTML suported The body of the email you wish to send. Typically, customers include their own HTML templates here. Must include [unsubscribe_url] in an <a> tag somewhere in the email. Note: any malformed HTML content will be sent to users. Please double-check your HTML is valid. 
 	EmailBody *string `json:"email_body,omitempty"`
 	// Channel: Email The name the email is from. If not specified, will default to \"from name\" set in the OneSignal Dashboard Email Settings. 
@@ -3307,7 +3307,7 @@ func (o NotificationAllOf) MarshalJSON() ([]byte, error) {
 		toSerialize["summary_arg_count"] = o.SummaryArgCount
 	}
 	if o.EmailSubect != nil {
-		toSerialize["email_subect"] = o.EmailSubect
+		toSerialize["email_subject"] = o.EmailSubect
 	}
 	if o.EmailBody != nil {
 		toSerialize["email_body"] = o.EmailBody
@@ -3424,7 +3424,7 @@ func (o *NotificationAllOf) UnmarshalJSON(bytes []byte) (err error) {
 		delete(additionalProperties, "thread_id")
 		delete(additionalProperties, "summary_arg")
 		delete(additionalProperties, "summary_arg_count")
-		delete(additionalProperties, "email_subect")
+		delete(additionalProperties, "email_subject")
 		delete(additionalProperties, "email_body")
 		delete(additionalProperties, "email_from_name")
 		delete(additionalProperties, "email_from_address")
