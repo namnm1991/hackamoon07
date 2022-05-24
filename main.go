@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
+	"time"
 
 	"github.com/ardanlabs/conf/v3"
 	"github.com/ardanlabs/service/business/sys/database"
 	"github.com/ardanlabs/service/foundation/logger"
 	"go.uber.org/zap"
-
-	"github.com/montanaflynn/stats"
 )
 
 // build is the git version of this program. It is set using build flags in the makefile.
@@ -25,7 +25,8 @@ func main() {
 	}
 	defer log.Sync()
 
-	demoSendEmail()
+	// demoSendEmail()
+	demoSendWebPush()
 
 	// Perform the startup and shutdown sequence.
 	if err := run(log); err != nil {
@@ -35,13 +36,23 @@ func main() {
 	}
 }
 
+func demoSendWebPush() {
+	// ======================================================
+	// send an web push noti
+	rand.Seed(time.Now().Unix())
+	no := rand.Intn(100)
+	title := fmt.Sprintf("S.O.S title %d", no)
+	content := fmt.Sprintf("S.O.S content %d", no)
+	sendWebPush(title, content)
+}
+
 func demoSendEmail() {
 	// ======================================================
 	// send an email
-	// emails := []string{"nam@krystal.app"}
-	// subject := "Welcome to Krystal SmartAlert"
-	// content := fmt.Sprintf("S.O.S %d", rand.Intn(100))
-	// sendEmail(emails, subject, content)
+	emails := []string{"nam@krystal.app"}
+	subject := "Welcome to Krystal SmartAlert"
+	content := fmt.Sprintf("S.O.S %d", rand.Intn(100))
+	sendEmail(emails, subject, content)
 
 	// ======================================================
 	// draw a spark line
@@ -53,14 +64,14 @@ func demoSendEmail() {
 	// (sigma stands for the standard deviation),
 	// where k is typically 2 (95%), 3 (99.76%),
 
-	nums := []float64{3, 5, 9, 1, 8, 6, 58, 9, 4, 10}
-	m, _ := stats.Mean(nums)
-	sd, _ := stats.StandardDeviation(nums)
+	// nums := []float64{3, 5, 9, 1, 8, 6, 58, 9, 4, 10}
+	// m, _ := stats.Mean(nums)
+	// sd, _ := stats.StandardDeviation(nums)
 
-	fmt.Printf("mean [%.3f], standard deviation: [%.3f]\n", m, sd)
+	// fmt.Printf("mean [%.3f], standard deviation: [%.3f]\n", m, sd)
 
-	o, _ := stats.QuartileOutliers([]float64{-1000, 1, 3, 4, 4, 6, 6, 6, 6, 7, 8, 15, 18, 100})
-	fmt.Printf("%+v\n", o)
+	// o, _ := stats.QuartileOutliers([]float64{-1000, 1, 3, 4, 4, 6, 6, 6, 6, 7, 8, 15, 18, 100})
+	// fmt.Printf("%+v\n", o)
 }
 
 func run(log *zap.SugaredLogger) error {

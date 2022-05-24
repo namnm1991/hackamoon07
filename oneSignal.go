@@ -13,6 +13,19 @@ const (
 	ONESIGNAL_API_KEY = "N2I5MmYwYjctM2Q5Ni00MzI1LTk0ZTQtYTBjMjJhYWJlODlh"
 )
 
+func sendWebPush(title, content string) {
+	notification := *onesignal.NewNotification(ONESIGNAL_APP_ID)
+
+	// ===========================================================================
+	// Config noti field
+	notification.SetIsIos(false)
+	notification.SetHeadings(*onesignal.NewStringMap(title))
+	notification.SetContents(*onesignal.NewStringMap(content))
+	notification.SetIncludedSegments([]string{"Subscribed Users"})
+
+	sendNoti(notification)
+}
+
 func sendEmail(emails []string, subject string, content string) {
 	notification := *onesignal.NewNotification(ONESIGNAL_APP_ID)
 
