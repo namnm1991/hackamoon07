@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 
 	"github.com/ardanlabs/conf/v3"
 	"github.com/ardanlabs/service/business/sys/database"
@@ -24,12 +25,25 @@ func main() {
 	}
 	defer log.Sync()
 
+	// demoSendEmail()
+	demoSendWebPush()
+
 	// Perform the startup and shutdown sequence.
 	if err := run(log); err != nil {
 		log.Errorw("startup", "ERROR", err)
 		log.Sync()
 		os.Exit(1)
 	}
+}
+
+func demoSendWebPush() {
+	// ======================================================
+	// send an web push noti
+	rand.Seed(time.Now().Unix())
+	no := rand.Intn(100)
+	title := fmt.Sprintf("S.O.S title %d", no)
+	content := fmt.Sprintf("S.O.S content %d", no)
+	sendWebPush(title, content)
 }
 
 func demoSendEmail() {
@@ -39,6 +53,25 @@ func demoSendEmail() {
 	subject := "Welcome to Krystal SmartAlert"
 	content := fmt.Sprintf("S.O.S %d", rand.Intn(100))
 	sendEmail(emails, subject, content)
+
+	// ======================================================
+	// draw a spark line
+	// sparkline()
+
+	// ======================================================
+	// simple calculation
+	// [mean - k * sigma..mean + k * sigma] range
+	// (sigma stands for the standard deviation),
+	// where k is typically 2 (95%), 3 (99.76%),
+
+	// nums := []float64{3, 5, 9, 1, 8, 6, 58, 9, 4, 10}
+	// m, _ := stats.Mean(nums)
+	// sd, _ := stats.StandardDeviation(nums)
+
+	// fmt.Printf("mean [%.3f], standard deviation: [%.3f]\n", m, sd)
+
+	// o, _ := stats.QuartileOutliers([]float64{-1000, 1, 3, 4, 4, 6, 6, 6, 6, 7, 8, 15, 18, 100})
+	// fmt.Printf("%+v\n", o)
 }
 
 func run(log *zap.SugaredLogger) error {
