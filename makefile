@@ -1,4 +1,5 @@
-SHELL := /bin/bash
+# SHELL := /bin/bash
+
 
 # ==============================================================================
 # Modules support
@@ -6,3 +7,16 @@ SHELL := /bin/bash
 tidy:
 	go mod tidy
 	go mod vendor
+
+db-run:
+	docker run --name smart-alert-pq \
+		-e POSTGRES_USER=suser \
+		-e POSTGRES_PASSWORD=spassword \
+		-e POSTGRES_DB=smart-alert \
+		-p 5432:5432 \
+		-v "$(shell pwd)/.data/postgres:/var/lib/postgresql/data" \
+		-d postgres:12-alpine
+
+db-stop:
+	docker stop smart-alert-pq
+	docker rm smart-alert-pq
