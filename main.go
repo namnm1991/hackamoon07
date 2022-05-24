@@ -26,7 +26,9 @@ func main() {
 	defer log.Sync()
 
 	// demoSendEmail()
-	demoSendWebPush()
+	// demoSendWebPush()
+
+	fmt.Println(time.Now().Unix())
 
 	// Perform the startup and shutdown sequence.
 	if err := run(log); err != nil {
