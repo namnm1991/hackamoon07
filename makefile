@@ -27,3 +27,6 @@ grafana-start:
   		--name=smart-alert-grafana \
   		-e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource" \
   		grafana/grafana:8.5.3
+
+generate-data:
+	go run app/services/collector/main.go 

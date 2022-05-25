@@ -100,12 +100,6 @@ func run(log *zap.SugaredLogger) error {
 	return nil
 }
 
-type Product struct {
-	gorm.Model
-	Code  string
-	Price uint
-}
-
 type Dataset struct {
 	gorm.Model
 
@@ -118,18 +112,37 @@ func generateDataset(db *gorm.DB) {
 	// Migrate the schema
 	db.AutoMigrate(&Dataset{})
 
-	name := "knc_vol"
+	// =========================================================================
 	lens := 1200
-	data := stats.NormBoxMullerRvs(10, 5, lens)
+
 	interval := time.Second * 30
 	startTime := time.Now().Add(-time.Duration(lens) * interval)
 
-	for i := 0; i < lens; i++ {
+	dataset := []Dataset{}
+	// price from 1.8 to 2.2
+	d1 := g("knc_price", lens, 2, 0.2, interval, startTime)
+	// vol from 9000 to 11000
+	d2 := g("knc_vol", lens, 10000, 1000, interval, startTime)
+	dataset = append(dataset, d1...)
+	dataset = append(dataset, d2...)
+
+	// Save the dataset into the database
+	for _, d := range dataset {
 		// Create
-		db.Create(&Dataset{
+		db.Create(&d)
+	}
+}
+
+func g(name string, lens int, loc float64, scale float64, interval time.Duration, startTime time.Time) []Dataset {
+	dataset := []Dataset{}
+	data := stats.NormBoxMullerRvs(loc, scale, lens)
+	for i := 0; i < lens; i++ {
+		dataset = append(dataset, Dataset{
 			Name:      name,
 			Value:     data[i],
 			Timestamp: startTime.Add(time.Duration(i) * interval),
 		})
 	}
+
+	return dataset
 }
