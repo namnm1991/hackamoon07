@@ -47,8 +47,8 @@ func demoSendWebPush() {
 	// content := fmt.Sprintf("S.O.S content %d", no)
 	// sendWebPush(title, content)
 
-	title := "KNC knc_price	S.O.S-Level-0"
-	content := "extreme: [[3.1697215708188193]] | median: [2.010128]"
+	title := "KNC trade volume is at 2x of it daily average!"
+	content := "Peak volume is up by 96% to $10M"
 	sendWebPush(title, content)
 }
 
