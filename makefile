@@ -20,3 +20,10 @@ db-run:
 db-stop:
 	docker stop smart-alert-pq
 	docker rm smart-alert-pq
+
+grafana-start:
+	docker run -d \
+  		-p 3000:3000 \
+  		--name=smart-alert-grafana \
+  		-e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource" \
+  		grafana/grafana:8.5.3
