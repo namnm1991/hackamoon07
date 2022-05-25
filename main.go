@@ -26,7 +26,7 @@ func main() {
 	defer log.Sync()
 
 	// demoSendEmail()
-	// demoSendWebPush()
+	demoSendWebPush()
 
 	fmt.Println(time.Now().Unix())
 
@@ -41,10 +41,14 @@ func main() {
 func demoSendWebPush() {
 	// ======================================================
 	// send an web push noti
-	rand.Seed(time.Now().Unix())
-	no := rand.Intn(100)
-	title := fmt.Sprintf("S.O.S title %d", no)
-	content := fmt.Sprintf("S.O.S content %d", no)
+	// rand.Seed(time.Now().Unix())
+	// no := rand.Intn(100)
+	// title := fmt.Sprintf("S.O.S title %d", no)
+	// content := fmt.Sprintf("S.O.S content %d", no)
+	// sendWebPush(title, content)
+
+	title := "KNC knc_price	S.O.S-Level-0"
+	content := "extreme: [[3.1697215708188193]] | median: [2.010128]"
 	sendWebPush(title, content)
 }
 

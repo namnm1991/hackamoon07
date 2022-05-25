@@ -28,6 +28,11 @@ grafana-start:
   		-e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource" \
   		grafana/grafana:8.5.3
 
-generate-data:
-	PGPASSWORD=spassword psql -h localhost -U suser -d smart-alert -c "DELETE FROM datasets WHERE set = 'knc'" & go run app/services/collector/main.go 
+data-reset:
+	PGPASSWORD=spassword psql -h localhost -U suser -d smart-alert -c "DELETE FROM datasets WHERE set = 'knc'; DELETE FROM alerts WHERE set = 'knc';"
+
+data-gen:
+	go run app/services/collector/main.go | go run app/tooling/logfmt/main.go -service=smart-alert-collector
 	
+monitor-run:
+	go run app/services/alerter/main.go | go run app/tooling/logfmt/main.go -service=smart-alert-monitor
