@@ -104,7 +104,7 @@ func run(log *zap.SugaredLogger) error {
 	generateDataset(db, set, lens, interval, startTime)
 
 	// mock as real time
-	log.Info("generating almost realtime data ...")
+	// log.Info("generating almost realtime data ...")
 	ticker := time.NewTicker(5 * time.Second)
 	for range ticker.C {
 		log.Info("generating ...")
@@ -135,11 +135,11 @@ func generateDataset(db *gorm.DB, set string, lens int, interval time.Duration, 
 	// generate sub data series
 	dataset := []Dataset{}
 	// price from 1.8 to 2.2
-	d1 := g(set, "knc_price", lens, 2, 0.2, interval, startTime)
+	d1 := g(set, "knc_price", lens, 2, 0.1, interval, startTime)
 	// vol from 9000 to 11000
-	d2 := g(set, "knc_vol", lens, 10000, 1000, interval, startTime)
+	d2 := g(set, "knc_vol", lens, 10000, 100, interval, startTime)
 	// vol from 3000 to 7000
-	d3 := g(set, "knc_transfer", lens, 5000, 500, interval, startTime)
+	d3 := g(set, "knc_transfer", lens, 5000, 200, interval, startTime)
 	dataset = append(dataset, d1...)
 	dataset = append(dataset, d2...)
 	dataset = append(dataset, d3...)
