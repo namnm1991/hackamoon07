@@ -31,10 +31,14 @@ func (w Worker) AddOperation(c *cron.Cron, updateTime string, f func()) {
 	}
 }
 
-func (w Worker) FetchAndSaveDataset() {
-	lastTime := w.db.GetLastTimeDataset()
+func (w Worker) FetchAndSavePriceVolDataset() {
+	symbol := "KNCUSDT"
+	lastTime := w.db.GetLastTimeDataset(symbol, symbol+"-vol")
+	if time.Now().UnixMilli()-lastTime-int64(5*time.Millisecond) < 0 {
+		return
+	}
 	log.Printf("lastTime of dataset in database = %d", lastTime)
-	tickerPrice, err := w.client.GetTickerPrice("KNCUSDT", "5m", lastTime, lastTime+300000*500)
+	tickerPrice, err := w.client.GetTickerPrice(symbol, "5m", lastTime+1, lastTime+300000*500)
 	if err != nil {
 		return
 	}
@@ -44,6 +48,23 @@ func (w Worker) FetchAndSaveDataset() {
 	}
 	volDataset := BuildVolDataSet(tickerPrice)
 	if err := w.db.AddDataset(volDataset); err != nil {
+		return
+	}
+}
+
+func (w Worker) FetchAndSaveFundingRate() {
+	symbol := "KNCUSDT"
+	lastTime := w.db.GetLastTimeDataset(symbol, symbol+"-fundingRate")
+	if time.Now().UnixMilli()-lastTime-int64(5*time.Millisecond) < 0 {
+		return
+	}
+	log.Printf("lastTime of fundingRate in database = %d", lastTime)
+	fundingRates, err := w.client.GetListFundingRate(symbol, lastTime+1)
+	if err != nil {
+		return
+	}
+	priceDataset := BuildFundingRateModel(fundingRates)
+	if err := w.db.AddDataset(priceDataset); err != nil {
 		return
 	}
 }

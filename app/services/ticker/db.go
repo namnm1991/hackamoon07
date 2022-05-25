@@ -57,9 +57,9 @@ func (db DB) AddDataset(dataset []Dataset) error {
 	return nil
 }
 
-func (db DB) GetLastTimeDataset() int64 {
+func (db DB) GetLastTimeDataset(symbol, name string) int64 {
 	var lastTime int64
-	err := db.Gorm.Model(&Dataset{}).Select("unix_time").Order("unix_time DESC").First(&lastTime).Error
+	err := db.Gorm.Model(&Dataset{}).Select("unix_time").Where("symbol= AND name=", symbol, name).Order("unix_time DESC").First(&lastTime).Error
 	if err != nil {
 		return StartTimeMillisec
 	}
