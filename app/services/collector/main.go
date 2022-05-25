@@ -103,6 +103,7 @@ func run(log *zap.SugaredLogger) error {
 type Dataset struct {
 	gorm.Model
 
+	Set       string
 	Name      string
 	Value     float64
 	Timestamp time.Time
@@ -113,18 +114,21 @@ func generateDataset(db *gorm.DB) {
 	db.AutoMigrate(&Dataset{})
 
 	// =========================================================================
+	set := "knc"
 	lens := 1200
-
 	interval := time.Second * 30
 	startTime := time.Now().Add(-time.Duration(lens) * interval)
 
 	dataset := []Dataset{}
 	// price from 1.8 to 2.2
-	d1 := g("knc_price", lens, 2, 0.2, interval, startTime)
+	d1 := g(set, "knc_price", lens, 2, 0.2, interval, startTime)
 	// vol from 9000 to 11000
-	d2 := g("knc_vol", lens, 10000, 1000, interval, startTime)
+	d2 := g(set, "knc_vol", lens, 10000, 1000, interval, startTime)
+	// vol from 3000 to 7000
+	d3 := g(set, "knc_transfer", lens, 5000, 2000, interval, startTime)
 	dataset = append(dataset, d1...)
 	dataset = append(dataset, d2...)
+	dataset = append(dataset, d3...)
 
 	// Save the dataset into the database
 	for _, d := range dataset {
@@ -133,11 +137,12 @@ func generateDataset(db *gorm.DB) {
 	}
 }
 
-func g(name string, lens int, loc float64, scale float64, interval time.Duration, startTime time.Time) []Dataset {
+func g(set, name string, lens int, loc float64, scale float64, interval time.Duration, startTime time.Time) []Dataset {
 	dataset := []Dataset{}
 	data := stats.NormBoxMullerRvs(loc, scale, lens)
 	for i := 0; i < lens; i++ {
 		dataset = append(dataset, Dataset{
+			Set:       set,
 			Name:      name,
 			Value:     data[i],
 			Timestamp: startTime.Add(time.Duration(i) * interval),
