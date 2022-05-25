@@ -3,9 +3,12 @@ module github.com/namnm1991/hackamoon07
 go 1.18
 
 require (
+	github.com/adshao/go-binance/v2 v2.3.5
 	github.com/ardanlabs/conf/v3 v3.1.2
 	github.com/ardanlabs/service v0.0.0-20220516132311-a68e053ab8f6
 	github.com/namnm1991/onesignal-go-api v1.0.2
+	github.com/robfig/cron/v3 v3.0.1
+	github.com/sirupsen/logrus v1.4.2
 	go.uber.org/zap v1.21.0
 	gorm.io/driver/postgres v1.3.6
 	gorm.io/gorm v1.23.5
@@ -29,11 +32,13 @@ require (
 
 require (
 	github.com/ardanlabs/darwin v1.3.0 // indirect
+	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/dimfeld/httptreemux/v5 v5.4.0 // indirect
 	github.com/felixge/httpsnoop v1.0.3 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.12.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
@@ -44,6 +49,7 @@ require (
 	github.com/jackc/pgx/v4 v4.16.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/mattn/go-runewidth v0.0.2 // indirect
 	github.com/mattn/go-sqlite3 v1.14.12 // indirect
 	github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7 // indirect
