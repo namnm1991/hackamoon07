@@ -29,4 +29,5 @@ grafana-start:
   		grafana/grafana:8.5.3
 
 generate-data:
-	go run app/services/collector/main.go 
+	PGPASSWORD=spassword psql -h localhost -U suser -d smart-alert -c "DELETE FROM datasets WHERE set = 'knc'" & go run app/services/collector/main.go 
+	

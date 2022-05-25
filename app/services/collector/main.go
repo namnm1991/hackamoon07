@@ -95,7 +95,26 @@ func run(log *zap.SugaredLogger) error {
 	// ======================================================
 	// Generate datasets
 
-	generateDataset(db)
+	// generate seed data
+	log.Info("generating seed data ...")
+	set := "knc"
+	lens := 1200
+	interval := time.Second * 5
+	startTime := time.Now().Add(-time.Duration(lens) * interval)
+	generateDataset(db, set, lens, interval, startTime)
+
+	// mock as real time
+	log.Info("generating almost realtime data ...")
+	ticker := time.NewTicker(5 * time.Second)
+	for range ticker.C {
+		set := "knc"
+		lens := 1
+		interval = time.Second * 5
+		startTime := time.Now().Add(-time.Duration(lens) * interval)
+		generateDataset(db, set, lens, interval, startTime)
+
+		log.Info("sleeping ...")
+	}
 
 	return nil
 }
@@ -109,16 +128,11 @@ type Dataset struct {
 	Timestamp time.Time
 }
 
-func generateDataset(db *gorm.DB) {
+func generateDataset(db *gorm.DB, set string, lens int, interval time.Duration, startTime time.Time) {
 	// Migrate the schema
 	db.AutoMigrate(&Dataset{})
 
-	// =========================================================================
-	set := "knc"
-	lens := 1200
-	interval := time.Second * 30
-	startTime := time.Now().Add(-time.Duration(lens) * interval)
-
+	// generate sub data series
 	dataset := []Dataset{}
 	// price from 1.8 to 2.2
 	d1 := g(set, "knc_price", lens, 2, 0.2, interval, startTime)
