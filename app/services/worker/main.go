@@ -99,10 +99,12 @@ func run(log *zap.SugaredLogger) error {
 	bClient := ticker.NewBinanceClient()
 	w := ticker.Init(bClient, db)
 	c := cron.New(cron.WithChain(cron.Recover(cron.DefaultLogger)))
-	w.AddOperation(c, "5m", w.FetchAndSaveDataset)
+	w.AddOperation(c, "5m", w.FetchAndSavePriceVolDataset)
+	w.AddOperation(c, "8h", w.FetchAndSaveFundingRate)
 
 	go c.Start()
-	go w.FetchAndSaveDataset()
+	go w.FetchAndSavePriceVolDataset()
+	go w.FetchAndSaveFundingRate()
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)

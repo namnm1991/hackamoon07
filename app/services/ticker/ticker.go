@@ -25,14 +25,34 @@ type TickerPrice struct {
 	AvgTime   int64   `json:"avg_time"`
 }
 
+type TickerFundingRate struct {
+	FundingTime int64   `json:"fundingTime"`
+	Symbol      string  `json:"symbol"`
+	FundingRate float64 `json:"lastFundingRate"`
+}
+
 type Dataset struct {
 	gorm.Model
 
-	Set       string
-	Name      string
+	Set       string `gorm:"index:idx_dataset"`
+	Name      string `gorm:"index:idx_dataset"`
 	Value     float64
 	Timestamp time.Time
-	UnixTime  int64 `gorm:"index,unique"`
+	UnixTime  int64 `gorm:"index:idx_dataset"`
+}
+
+func BuildFundingRateModel(data []TickerFundingRate) []Dataset {
+	var results []Dataset
+	for _, d := range data {
+		results = append(results, Dataset{
+			Set:       d.Symbol,
+			UnixTime:  d.FundingTime,
+			Timestamp: time.UnixMilli(d.FundingTime),
+			Value:     d.FundingRate,
+			Name:      d.Symbol + "-" + "fundingRate",
+		})
+	}
+	return results
 }
 
 func BuildPriceDataset(tps []TickerPrice) []Dataset {
